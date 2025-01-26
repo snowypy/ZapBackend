@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const body_parser_1 = __importDefault(require("body-parser"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
 const coursesRoutes_1 = __importDefault(require("./routes/coursesRoutes"));
@@ -21,7 +20,6 @@ mongoose_1.default.connect(mongoUri, {
 }).catch(err => {
     console.error('couldn\'t connect to db', err);
 });
-app.use(body_parser_1.default.json());
 app.use('/users', userRoutes_1.default);
 app.use('/admin', adminRoutes_1.default);
 app.use('/courses', coursesRoutes_1.default);

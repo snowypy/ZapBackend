@@ -25,8 +25,6 @@ mongoose.connect(mongoUri, {
   console.error('couldn\'t connect to db', err);
 });
 
-app.use(bodyParser.json());
-
 app.use('/users', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/courses', coursesRoutes);
