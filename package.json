@@ -1,13 +1,23 @@
 {
-  "name": "${PROJECT_NAME}",
+  "name": "ZapBackend",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "uuid": "^11.0.5"
+  },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
+    "i": "^0.3.7",
+    "npm": "^11.0.0",
     "typescript": "^5.5.3"
   },
   "private": true
