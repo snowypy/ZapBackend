@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { Course } from '../models/courseModel';
+import * as mongoose from 'mongoose';
 import { User } from '../models/userModel';
 import express from 'express';
 import { Flashcard, IFlashcard } from '../models/flashcardModel';
@@ -9,6 +10,12 @@ const router = Router();
 router.post('/create', async (req: Request, res: Response) => {
   const { name, description, creatorId, isPrivate } = req.body;
   try {
+
+    if (!mongoose.Types.ObjectId.isValid(creatorId)) {
+      res.status(400).json({ message: 'Invalid creator ID' });
+      return;
+    }
+
     const newCourse = await Course.create({ name, description, creator: creatorId, isPrivate });
     res.status(201).json({ message: 'Course created', course: newCourse });
   } catch (error) {
