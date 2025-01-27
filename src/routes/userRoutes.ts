@@ -74,9 +74,8 @@ router.put('/change-username', async (req: Request, res: Response) => {
 
 router.put('/change-password', async (req: Request, res: Response) => {
   const { userId, token, newPassword } = req.body;
-  if (token !== ) {
-    
-  }
+
+
   const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
   const user = await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
   if (user) {

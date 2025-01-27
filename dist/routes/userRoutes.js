@@ -108,8 +108,6 @@ router.put('/change-username', (req, res) => __awaiter(void 0, void 0, void 0, f
 }));
 router.put('/change-password', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId, token, newPassword } = req.body;
-    if (token !== ) {
-    }
     const hashedPassword = yield bcrypt_1.default.hash(newPassword, SALT_ROUNDS);
     const user = yield userModel_1.User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
     if (user) {
