@@ -67,7 +67,7 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     const jwt = require('jsonwebtoken');
     const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
-    res.json({ message: `Welcome back, ${user.username}`, token }).status(200);
+    res.json({ success: `Welcome back, ${user.username}`, token }).status(200);
 }));
 router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password, inviteCode } = req.body;
