@@ -28,7 +28,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
   const jwt = require('jsonwebtoken');
   const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
-  res.json({ message: 'Logged in', token });
+  res.json({ message: `Welcome back, ${user.username}`, token }).status(200);
 });
 
 router.post('/register', async (req: Request, res: Response) => {
