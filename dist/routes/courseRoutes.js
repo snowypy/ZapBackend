@@ -17,13 +17,13 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const courseModel_1 = require("../models/courseModel");
 const router = (0, express_1.Router)();
 router.post('/create', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, description, creatorId, isPrivate } = req.body;
+    const { name, description, category, creatorId, isPrivate } = req.body;
     try {
         if (!mongoose_1.default.Types.ObjectId.isValid(creatorId)) {
             res.status(400).json({ message: 'Invalid creator ID' });
             return;
         }
-        const newCourse = yield courseModel_1.Course.create({ name, description, creator: creatorId, isPrivate });
+        const newCourse = yield courseModel_1.Course.create({ name, description, category, creator: creatorId, isPrivate });
         res.status(201).json({ message: 'Course created', course: newCourse });
     }
     catch (error) {

@@ -5,13 +5,13 @@ import { Course } from '../models/courseModel';
 const router = Router();
 
 router.post('/create', async (req: Request, res: Response) => {
-  const { name, description, creatorId, isPrivate } = req.body;
+  const { name, description, category, creatorId, isPrivate } = req.body;
   try {
     if (!mongoose.Types.ObjectId.isValid(creatorId)) {
       res.status(400).json({ message: 'Invalid creator ID' });
       return;
     }
-    const newCourse = await Course.create({ name, description, creator: creatorId, isPrivate });
+    const newCourse = await Course.create({ name, description, category, creator: creatorId, isPrivate });
     res.status(201).json({ message: 'Course created', course: newCourse });
   } catch (error) {
     res.status(500).json({ message: 'Error creating course', error });

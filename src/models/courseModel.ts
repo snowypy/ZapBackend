@@ -4,6 +4,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 interface ICourse extends Document {
   name: string;
   description: string;
+  category: string;
   creator: mongoose.Types.ObjectId;
   students: mongoose.Types.ObjectId[]; 
   invites: mongoose.Types.ObjectId[];
@@ -14,6 +15,7 @@ interface ICourse extends Document {
 const CourseSchema: Schema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
+  category: { type: String, required: true },
   creator: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
   students: [{ type: mongoose.Types.ObjectId, ref: 'User' }], 
   invites: [{ type: mongoose.Types.ObjectId, ref: 'InviteCode' }],
