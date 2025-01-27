@@ -83,7 +83,7 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     const hashedPassword = yield bcrypt_1.default.hash(password, SALT_ROUNDS);
     const newUser = yield userModel_1.User.create({ username, email, password: hashedPassword, inviteCode });
-    res.status(201).json({ success: 'Registered user', user: newUser });
+    res.status(201).json({ success: 'Signed up, redirecting to login page...', user: newUser });
 }));
 router.post('/profile-picture', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId, profilePictureUrl } = req.body;

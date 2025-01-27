@@ -49,7 +49,7 @@ router.post('/register', async (req: Request, res: Response) => {
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
   const newUser = await User.create({ username, email, password: hashedPassword, inviteCode });
-  res.status(201).json({ success: 'Registered user', user: newUser });
+  res.status(201).json({ success: 'Signed up, redirecting to login page...', user: newUser });
 });
 
 router.post('/profile-picture', async (req: Request, res: Response) => {
