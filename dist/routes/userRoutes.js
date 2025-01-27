@@ -97,19 +97,19 @@ router.post('/profile-picture', (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 }));
 router.put('/change-username', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId, newUsername } = req.body;
+    const { userId, username } = req.body;
     const user1 = yield userModel_1.User.findById(userId);
     if (user1) {
-        if (newUsername === user1.username) {
+        if (username === user1.username) {
             res.status(400).json({ message: 'Username cannot be the same as the old username' });
             return;
         }
-        const existingUsername = yield userModel_1.User.findOne({ username: newUsername });
+        const existingUsername = yield userModel_1.User.findOne({ username: username });
         if (existingUsername) {
             res.status(400).json({ message: 'Username in use' });
             return;
         }
-        const user = yield userModel_1.User.findByIdAndUpdate(userId, { username: newUsername }, { new: true });
+        const user = yield userModel_1.User.findByIdAndUpdate(userId, { username: username }, { new: true });
         res.json({ message: 'Username updated', user });
     }
     else {
