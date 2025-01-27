@@ -106,4 +106,18 @@ router.post('/accept-invite/:courseId', async (req: Request, res: Response) => {
   }
 })
 
+router.get('/:courseId/flashcards', async (req: Request, res: Response) => {
+  const { courseId } = req.params;
+  try {
+    const course = await Course.findById(courseId).populate('flashcards');
+    if (course) {
+      res.json({ flashcards: course.flashcards });
+    } else {
+      res.status(404).json({ message: 'Course not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving flashcards', error });
+  }
+})
+
 export default router;

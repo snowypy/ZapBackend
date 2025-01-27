@@ -42,6 +42,7 @@ const CourseSchema = new mongoose_1.Schema({
     creator: { type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true },
     students: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
     invites: [{ type: mongoose_1.default.Types.ObjectId, ref: 'InviteCode' }],
+    flashcards: [{ type: mongoose_1.default.Types.ObjectId, ref: 'Flashcard' }],
     views: { type: Number, default: 0 },
     isPrivate: { type: Boolean, default: false }
 });

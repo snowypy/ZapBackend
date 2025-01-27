@@ -35,10 +35,9 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Flashcard = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const flashcardSchema = new mongoose_1.Schema({
+const FlashcardSchema = new mongoose_1.Schema({
     question: { type: String, required: true },
-    answer: { type: String, required: true },
-    courseId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Course', required: true },
+    answer: { type: String, required: true }
 });
-const Flashcard = mongoose_1.default.model('Flashcard', flashcardSchema);
+const Flashcard = mongoose_1.default.model('Flashcard', FlashcardSchema);
 exports.Flashcard = Flashcard;

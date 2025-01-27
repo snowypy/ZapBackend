@@ -116,4 +116,19 @@ router.post('/accept-invite/:courseId', (req, res) => __awaiter(void 0, void 0, 
         res.status(500).json({ message: 'Error accepting invite', error });
     }
 }));
+router.get('/:courseId/flashcards', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { courseId } = req.params;
+    try {
+        const course = yield courseModel_1.Course.findById(courseId).populate('flashcards');
+        if (course) {
+            res.json({ flashcards: course.flashcards });
+        }
+        else {
+            res.status(404).json({ message: 'Course not found' });
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error retrieving flashcards', error });
+    }
+}));
 exports.default = router;
