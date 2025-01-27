@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes';
 import adminRoutes from './routes/adminRoutes';
-import coursesRoutes from './routes/coursesRoutes';
+import courseRoutes from './routes/courseRoutes';
 import mongoose, { ConnectOptions } from 'mongoose';
 import dotenv from 'dotenv';
 
@@ -25,9 +25,11 @@ mongoose.connect(mongoUri, {
   console.error('couldn\'t connect to db', err);
 });
 
+app.use(bodyParser.json());
+
 app.use('/users', userRoutes);
 app.use('/admin', adminRoutes);
-app.use('/courses', coursesRoutes);
+app.use('/courses', courseRoutes);
 
 app.listen(PORT, () => {
   console.log(`running on port ${PORT}`);

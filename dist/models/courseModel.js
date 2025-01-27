@@ -36,31 +36,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Course = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const CourseSchema = new mongoose_1.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    creator: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    participants: [{
-            type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: 'User'
-        }],
-    isPrivate: {
-        type: Boolean,
-        default: false
-    },
-    invites: [{
-            type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: 'User'
-        }]
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    creator: { type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true },
+    students: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
+    invites: [{ type: mongoose_1.default.Types.ObjectId, ref: 'InviteCode' }],
+    views: { type: Number, default: 0 }
 });
 const Course = mongoose_1.default.model('Course', CourseSchema);
 exports.Course = Course;
