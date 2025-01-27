@@ -46,6 +46,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const uuid_1 = require("uuid");
 const userModel_1 = require("../models/userModel");
 const inviteCodeModel_1 = require("../models/inviteCodeModel");
 const dotenv = __importStar(require("dotenv"));
@@ -66,7 +67,7 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     const jwt = require('jsonwebtoken');
-    const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || (0, uuid_1.v4)(), { expiresIn: '7d' });
     res.json({ success: `Welcome back, ${user.username}`, token }).status(200);
 }));
 router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -106,7 +107,9 @@ router.put('/change-username', (req, res) => __awaiter(void 0, void 0, void 0, f
     }
 }));
 router.put('/change-password', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId, newPassword } = req.body;
+    const { userId, token, newPassword } = req.body;
+    if (token !== ) {
+    }
     const hashedPassword = yield bcrypt_1.default.hash(newPassword, SALT_ROUNDS);
     const user = yield userModel_1.User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
     if (user) {

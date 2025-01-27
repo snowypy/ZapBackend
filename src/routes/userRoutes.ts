@@ -27,7 +27,7 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 
   const jwt = require('jsonwebtoken');
-  const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+  const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || uuidv4(), { expiresIn: '7d' });
   res.json({ success: `Welcome back, ${user.username}`, token }).status(200);
 });
 
@@ -73,7 +73,10 @@ router.put('/change-username', async (req: Request, res: Response) => {
 });
 
 router.put('/change-password', async (req: Request, res: Response) => {
-  const { userId, newPassword } = req.body;
+  const { userId, token, newPassword } = req.body;
+  if (token !== ) {
+    
+  }
   const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
   const user = await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
   if (user) {
