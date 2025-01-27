@@ -65,4 +65,13 @@ router.post('/delete-user/:id', async (req: Request, res: Response) => {
   }
 })
 
+router.post('/get-all/users', async (req: Request, res: Response) => {
+  try {
+    const users = await User.find();
+    res.json({ users });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving users', error });
+  }
+})
+
 export default router;

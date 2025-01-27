@@ -76,4 +76,13 @@ router.post('/delete-user/:id', (req, res) => __awaiter(void 0, void 0, void 0, 
         res.status(500).json({ message: 'Error deleting user', error });
     }
 }));
+router.post('/get-all/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield userModel_1.User.find();
+        res.json({ users });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error retrieving users', error });
+    }
+}));
 exports.default = router;
