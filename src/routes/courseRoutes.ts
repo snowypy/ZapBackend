@@ -21,7 +21,7 @@ router.post('/create', async (req: Request, res: Response) => {
 router.get('/:courseId', async (req: Request, res: Response) => {
   const { courseId } = req.params;
   try {
-    const course = await Course.findById(courseId).populate('creator students invites');
+    const course = await Course.findById(courseId).populate({ path: 'creator', select: 'username' }).populate({ path: 'students', select: 'username' }).populate('invites');
     if (course) {
       res.json({ course });
     } else {

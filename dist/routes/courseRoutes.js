@@ -33,7 +33,7 @@ router.post('/create', (req, res) => __awaiter(void 0, void 0, void 0, function*
 router.get('/:courseId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { courseId } = req.params;
     try {
-        const course = yield courseModel_1.Course.findById(courseId).populate('creator students invites');
+        const course = yield courseModel_1.Course.findById(courseId).populate({ path: 'creator', select: 'username' }).populate({ path: 'students', select: 'username' }).populate('invites');
         if (course) {
             res.json({ course });
         }
