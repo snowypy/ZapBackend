@@ -131,4 +131,14 @@ router.get('/:courseId/flashcards', (req, res) => __awaiter(void 0, void 0, void
         res.status(500).json({ message: 'Error retrieving flashcards', error });
     }
 }));
+router.post('/get/invites', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.body;
+    try {
+        const courses = yield courseModel_1.Course.find({ invites: userId });
+        res.json({ courses });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error getting invites', error });
+    }
+}));
 exports.default = router;

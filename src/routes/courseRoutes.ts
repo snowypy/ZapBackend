@@ -120,4 +120,15 @@ router.get('/:courseId/flashcards', async (req: Request, res: Response) => {
   }
 })
 
+router.post('/get/invites', async (req: Request, res: Response) => {
+  const { userId } = req.body;
+  try {
+    const courses = await Course.find({ invites: userId });
+    res.json({ courses });
+  }
+  catch (error) {
+    res.status(500).json({ message: 'Error getting invites', error });
+  }
+})
+
 export default router;
