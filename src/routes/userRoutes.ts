@@ -28,7 +28,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
   const jwt = require('jsonwebtoken');
   const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || uuidv4(), { expiresIn: '7d' });
-  res.json({ success: `Welcome back, ${user.username}`, token }).status(200);
+  res.json({ success: `Welcome back, ${user.username}`, token, userId: `${user.id}` }).status(200);
 });
 
 router.post('/register', async (req: Request, res: Response) => {
@@ -73,16 +73,28 @@ router.put('/change-username', async (req: Request, res: Response) => {
 });
 
 router.put('/change-password', async (req: Request, res: Response) => {
-  const { userId, token, newPassword } = req.body;
+  const { userId, oldPassword, newPassword } = req.body;
 
+
+  if (oldPassword === newPassword) {
+    res.status(400).json({ message: 'New password cannot be the same as the old password' });
+    return;
+  }
 
   const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
   const user = await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
-  if (user) {
-    res.json({ message: 'Password updated', user });
-  } else {
+  if (!user) {
     res.status(404).json({ message: 'No user found' });
+    return;
   }
+
+  if (!await bcrypt.compare(oldPassword, user.password)) {
+    res.status(401).json({ message: 'Invalid old password' });
+    return;
+  }
+
+  res.json({ success: 'Your password has been updated. Make sure to store is safely', user });
+
 });
 
 export default router;
