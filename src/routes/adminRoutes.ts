@@ -74,4 +74,13 @@ router.post('/get-all/users', async (req: Request, res: Response) => {
   }
 })
 
+router.post('/get-all/invites', async (req: Request, res: Response) => {
+  try {
+    const invites = await InviteCode.find();
+    res.json({ invites });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving invites', error });
+  }
+})
+
 export default router;

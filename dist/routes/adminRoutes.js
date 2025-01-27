@@ -85,4 +85,13 @@ router.post('/get-all/users', (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(500).json({ message: 'Error retrieving users', error });
     }
 }));
+router.post('/get-all/invites', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const invites = yield inviteCodeModel_1.InviteCode.find();
+        res.json({ invites });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error retrieving invites', error });
+    }
+}));
 exports.default = router;
