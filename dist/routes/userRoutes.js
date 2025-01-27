@@ -139,4 +139,14 @@ router.put('/change-password', (req, res) => __awaiter(void 0, void 0, void 0, f
     }
     res.json({ success: 'Your password has been updated. Make sure to store is safely', user });
 }));
+router.get('/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    const user = yield userModel_1.User.findById(userId);
+    if (user) {
+        res.json(user);
+    }
+    else {
+        res.status(404).json({ message: 'No user found' });
+    }
+}));
 exports.default = router;

@@ -120,4 +120,14 @@ router.put('/change-password', async (req: Request, res: Response) => {
 
 });
 
+router.get('/:userId', async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const user = await User.findById(userId);
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ message: 'No user found' });
+  }
+});
+
 export default router;
