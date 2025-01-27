@@ -13,7 +13,7 @@ router.post('/create', async (req: Request, res: Response) => {
             return;
         }
         
-        const course = await Course.findById(new mongoose.Types.ObjectId(courseId));
+        const course = await Course.findById(new mongoose.Types.ObjectId(courseId as string));
         if (!course) {
             res.status(404).json({ message: 'Course not found' });
             return;
@@ -35,7 +35,7 @@ router.post('/update', async (req: Request, res: Response) => {
             res.status(400).json({ message: 'Invalid flashcard ID' });
             return;
         }
-        const flashcard = await Flashcard.findById(new mongoose.Types.ObjectId(flashcardId));
+        const flashcard = await Flashcard.findById(new mongoose.Types.ObjectId(flashcardId as string));
         if (!flashcard) {
             res.status(404).json({ message: 'Flashcard not found' });
             return;
@@ -57,7 +57,7 @@ router.post('/delete', async (req: Request, res: Response) => {
             res.status(400).json({ message: 'Invalid flashcard ID' });
             return;
         }
-        const flashcard = await Flashcard.findByIdAndDelete(new mongoose.Types.ObjectId(flashcardId));
+        const flashcard = await Flashcard.findByIdAndDelete(new mongoose.Types.ObjectId(flashcardId as string));
         if (!flashcard) {
             res.status(404).json({ message: 'Flashcard not found' });
             return;

@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes';
 import adminRoutes from './routes/adminRoutes';
 import courseRoutes from './routes/courseRoutes';
+import cors from 'cors';
 import mongoose, { ConnectOptions } from 'mongoose';
 import dotenv from 'dotenv';
 
@@ -26,6 +27,7 @@ mongoose.connect(mongoUri, {
 });
 
 app.use(bodyParser.json());
+cors();
 
 app.use('/users', userRoutes);
 app.use('/admin', adminRoutes);
