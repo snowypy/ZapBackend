@@ -81,15 +81,22 @@ router.put('/change-password', async (req: Request, res: Response) => {
     return;
   }
 
-  const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
-  const user = await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
-  if (!user) {
+  const user1 = await User.findById(userId);
+
+  if (!user1) {
     res.status(404).json({ message: 'No user found' });
     return;
   }
 
-  if (!await bcrypt.compare(oldPassword, user.password)) {
+  if (!await bcrypt.compare(oldPassword, user1.password)) {
     res.status(401).json({ message: 'Invalid old password' });
+    return;
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
+  const user = await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
+  if (!user) {
+    res.status(404).json({ message: 'No user found' });
     return;
   }
 
