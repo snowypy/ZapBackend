@@ -79,8 +79,10 @@ router.put('/change-username', async (req: Request, res: Response) => {
       res.status(400).json({ message: 'Username in use' });
       return;
     }
+
     const user = await User.findByIdAndUpdate(userId, { username: username }, { new: true });
-    res.json({ message: 'Username updated', user });
+    res.json({ success: `Your username has been changed. Hello ${username}!`, user });
+
   } else {
     res.status(404).json({ message: 'No user found' });
   }

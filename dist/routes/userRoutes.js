@@ -110,7 +110,7 @@ router.put('/change-username', (req, res) => __awaiter(void 0, void 0, void 0, f
             return;
         }
         const user = yield userModel_1.User.findByIdAndUpdate(userId, { username: username }, { new: true });
-        res.json({ message: 'Username updated', user });
+        res.json({ success: `Your username has been changed. Hello ${username}!`, user });
     }
     else {
         res.status(404).json({ message: 'No user found' });
