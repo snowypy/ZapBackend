@@ -41,7 +41,8 @@ const CourseSchema = new mongoose_1.Schema({
     creator: { type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true },
     students: [{ type: mongoose_1.default.Types.ObjectId, ref: 'User' }],
     invites: [{ type: mongoose_1.default.Types.ObjectId, ref: 'InviteCode' }],
-    views: { type: Number, default: 0 }
+    views: { type: Number, default: 0 },
+    isPrivate: { type: Boolean, default: false }
 });
 const Course = mongoose_1.default.model('Course', CourseSchema);
 exports.Course = Course;

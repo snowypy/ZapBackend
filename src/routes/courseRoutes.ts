@@ -23,6 +23,7 @@ router.get('/:courseId', async (req: Request, res: Response) => {
   try {
     const course = await Course.findById(courseId).populate({ path: 'creator', select: 'username' }).populate({ path: 'students', select: 'username' }).populate('invites');
     if (course) {
+      Course.updateOne({ _id: courseId }, { $inc: { views: 1 } });
       res.json({ course });
     } else {
       res.status(404).json({ message: 'Course not found' });
@@ -37,7 +38,7 @@ router.post('/join/:courseId', async (req: Request, res: Response) => {
   const { userId } = req.body;
   try {
     const course = await Course.findById(courseId);
-    if (course && !course.students.includes(userId)) {
+    if (course && !course.students.includes(userId) && !course.isPrivate) {
       course.students.push(userId);
       await course.save();
       res.json({ message: 'Joined course', course });
@@ -48,6 +49,60 @@ router.post('/join/:courseId', async (req: Request, res: Response) => {
   }
   catch (error) {
     res.status(500).json({ message: 'Error joining course', error });
+  }
+})
+
+router.post('/invite/:courseId', async (req: Request, res: Response) => {
+  const { courseId } = req.params;
+  const { userId } = req.body;
+  try {
+    const course = await Course.findById(courseId);
+    if (!course) {
+      res.status(404).json({ message: 'Course not found' });
+      return;
+    }
+    if (!userId) {
+      res.status(400).json({ message: 'User ID not found' });
+      return;
+    }
+    if (!course.isPrivate) {
+      res.status(400).json({ message: 'Course is not private' });
+      return;
+    }
+    if (!course.invites.includes(userId)) {
+      course.invites.push(userId);
+      await course.save();
+      res.json({ message: 'Invited to course', course });
+    }
+    else {
+      res.status(404).json({ message: 'Course not found or already invited' });
+    }
+  }
+  catch (error) {
+    res.status(500).json({ message: 'Error inviting course', error });
+  }
+})
+
+router.post('/accept-invite/:courseId', async (req: Request, res: Response) => {
+  const { courseId } = req.params;
+  const { userId } = req.body;
+  try {
+    const course = await Course.findById(courseId);
+    if (!course) {
+      res.status(404).json({ message: 'Course not found' });
+      return;
+    }
+    if (!course.invites.includes(userId)) {
+      res.status(404).json({ message: 'Invite revoked or invalid.' });
+      return;
+    }
+    course.invites = course.invites.filter(id => id.toString() !== userId);
+    course.students.push(userId);
+    await course.save();
+    res.json({ message: 'Invite accepted', course });
+  }
+  catch (error) {
+    res.status(500).json({ message: 'Error accepting invite', error });
   }
 })
 
