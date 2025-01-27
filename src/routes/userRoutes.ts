@@ -64,8 +64,22 @@ router.post('/profile-picture', async (req: Request, res: Response) => {
 
 router.put('/change-username', async (req: Request, res: Response) => {
   const { userId, newUsername } = req.body;
-  const user = await User.findByIdAndUpdate(userId, { username: newUsername }, { new: true });
-  if (user) {
+  
+  
+  
+  const user1 = await User.findById(userId);
+  if (user1) {
+    if (newUsername === user1.username) {
+      res.status(400).json({ message: 'Username cannot be the same as the old username' });
+      return;
+    }
+  
+    const existingUsername = await User.findOne({ username: newUsername });
+    if (existingUsername) {
+      res.status(400).json({ message: 'Username in use' });
+      return;
+    }
+    const user = await User.findByIdAndUpdate(userId, { username: newUsername }, { new: true });
     res.json({ message: 'Username updated', user });
   } else {
     res.status(404).json({ message: 'No user found' });
