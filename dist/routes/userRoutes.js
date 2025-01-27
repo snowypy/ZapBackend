@@ -67,8 +67,8 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     const jwt = require('jsonwebtoken');
-    const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || (0, uuid_1.v4)(), { expiresIn: '7d' });
-    res.json({ success: `Welcome back, ${user.username}`, token, userId: `${user.id}` }).status(200);
+    const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET || (0, uuid_1.v4)(), { expiresIn: '7d' });
+    res.json({ success: `Welcome back, ${user.username}`, token, userId: `${user._id}` }).status(200);
 }));
 router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password, inviteCode } = req.body;
