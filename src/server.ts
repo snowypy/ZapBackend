@@ -27,7 +27,7 @@ mongoose.connect(mongoUri, {
 });
 
 app.use(bodyParser.json());
-cors();
+app.use(cors());
 
 app.use('/users', userRoutes);
 app.use('/admin', adminRoutes);
